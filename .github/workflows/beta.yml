@@ -1,0 +1,17 @@
+name: beta
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: update beta
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd ${{ secrets.WWWROOT }}/beta.notflix.pknw1.co.uk && git pull
+          host: ${{ secrets.KS2_HOST }}
+          port: ${{ secrets.KS2_PORT }}
+          username: ${{ secrets.KS2_USER }}
+          privateKey: ${{ secrets.KS2_PRIVATE_KEY}}

@@ -1,0 +1,20 @@
+name: release
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Release Pull
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd ${{ secrets.WWWROOT }} && cp -R beta.notflix.pknw1.co.uk releases-notflix.pknw1.co.uk/release-$(date +%d%m%y%H%M) && rm notflix.pknw1.co.uk && ln -s releases-notflix.pknw1.co.uk/release-$(date +%d%m%y%H%M) notflix.pknw1.co.uk #rel.pknw1.co.uk && git pull
+          host: ${{ secrets.KS2_HOST }}
+          port: ${{ secrets.KS2_PORT }}
+          username: ${{ secrets.KS2_USER }}
+          privateKey: ${{ secrets.KS2_PRIVATE_KEY}}
+
